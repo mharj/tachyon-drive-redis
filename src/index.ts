@@ -60,6 +60,9 @@ export class RedisStorageDriver<Input> extends StorageDriver<Input, Buffer> {
 		return true;
 	}
 
+	/**
+	 * build the redis driver and connect if not already connected
+	 */
 	private async getDriver(): Promise<RedisClient> {
 		if (!this.redis) {
 			this.redis = createClient(await this.getOptions());
@@ -68,6 +71,9 @@ export class RedisStorageDriver<Input> extends StorageDriver<Input, Buffer> {
 		return this.redis;
 	}
 
+	/**
+	 * get the redis options to use for the driver
+	 */
 	private getOptions(): RedisOptions | Promise<RedisOptions> {
 		return typeof this.options === 'function' ? this.options() : this.options;
 	}
