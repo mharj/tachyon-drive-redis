@@ -1,5 +1,5 @@
 import {createClient, RedisClientOptions, RedisFunctions, RedisModules, RedisScripts} from '@redis/client';
-import {IPersistSerializer, IStoreProcessor, StorageDriver} from 'tachyon-drive';
+import {IExternalNotify, IPersistSerializer, IStoreProcessor, StorageDriver} from 'tachyon-drive';
 import {commandOptions} from '@redis/client/dist/lib/command-options';
 import {ILoggerLike} from '@avanio/logger-like';
 
@@ -19,6 +19,7 @@ export class RedisStorageDriver<Input> extends StorageDriver<Input, Buffer> {
 	 * @param key - key to use for storage
 	 * @param options - redis client options
 	 * @param serializer - tachyon serializer to use
+	 * @param extNotify - optional external notify service to notify store update events
 	 * @param processor - tachyon processor to use (default: undefined)
 	 * @param logger - logger to use (default: undefined)
 	 */
@@ -27,10 +28,11 @@ export class RedisStorageDriver<Input> extends StorageDriver<Input, Buffer> {
 		key: string,
 		options: RedisOptionsOrProvider,
 		serializer: IPersistSerializer<Input, Buffer>,
+		extNotify?: IExternalNotify,
 		processor?: IStoreProcessor<Buffer>,
 		logger?: ILoggerLike | Console,
 	) {
-		super(name, serializer, processor, logger);
+		super(name, serializer, extNotify || null, processor, logger);
 		this.options = options;
 		this.key = key;
 	}

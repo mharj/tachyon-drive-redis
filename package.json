@@ -66,6 +66,6 @@
     "dependencies": {
         "@avanio/logger-like": "^0.1.1",
         "@redis/client": "^1.5.8",
-        "tachyon-drive": "^0.1.4"
+        "tachyon-drive": "^0.2.2"
     }
 }
